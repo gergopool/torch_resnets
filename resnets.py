@@ -219,6 +219,7 @@ class ResNet(nn.Module):
             block, num_out_filters, layers[3], stride=2, dilate=replace_stride_with_dilation[2]
         )
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+        self.out_dim = num_out_filters * block.expansion
 
         self.fc = None
         self.pred = None
@@ -324,7 +325,7 @@ class ResNet(nn.Module):
 
 
 def resnet18(**kwargs):
-    return ResNet(Bottleneck, [2, 2, 2, 2], **kwargs)
+    return ResNet(BasicBlock, [2, 2, 2, 2], **kwargs)
 
 
 def resnet18w2(**kwargs):
